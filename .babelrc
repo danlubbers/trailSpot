@@ -1,0 +1,16 @@
+{
+	"presets": ["@babel/preset-env"],
+	"plugins": [
+		[
+			"@babel/plugin-transform-runtime",
+			{
+				"helpers": false,
+				"useESModules": true
+			}
+    ],
+    ["@babel/plugin-transform-regenerator"]
+	],
+	"retainLines": true,
+	"sourceMaps": true
+}
+

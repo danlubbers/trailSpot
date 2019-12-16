@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TrailSpot</title>
+    <link rel="stylesheet" href="../src/style.scss" type='text/scss'/>
+    <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
+    <!-- <script src="/config.js" defer></script> -->
+    <script src="assets/main.js" defer></script>
+  </head>
+  
+  <body>
+    <header>
+      <!-- <h1>Welcome to TrailSpot</h1> -->
+      <img src="/assets/images/trailspot.png" alt="trailspot">
+    </header>
+
+    <div class='search-container search-container-click'>
+      <h2>Seach for an area based on your location</h2>
+      <button id='apiLocator' class='apiLocator'>Search</button>
+    </div>
+    <div class='search-container search-container-input'>
+      <h2>Search for an area by city & state</h2> <input id='city-search' class='city-search' type="text" placeholder="Ex. Saratoga Springs"><input id='state-search' class='state-search' type="text" placeholder="Ex. NY">
+      <button id='userSearchInput' class='userSearchInput'>Search</button>
+    </div>
+
+    <div id='location-results-container' class='location-results-container'>
+      <div id='area-container' class='area-container'>
+        <h2>Based on your location of 
+          <div class='city-state'>
+            <h3 id='city'></h3> <h3 id='region'></h3> 
+          </div>we have found these trails around you</h2>
+      </div> 
+    
+      <div class='trail-container'>
+        <div id='trail-info' class='trail-info-container'></div>
+      </div>
+    </div>
+
+    <div id='searched-results-container' class='searched-results-container'>
+      <div id='area-container' class='area-container'>
+          <div class='city-state'>
+          </div>We have found these trails around you based on your search criteria of</h2>
+          <h3 id='city'></h3> <h3 id='region'></h3> 
+      </div> 
+    
+      <div class='trail-container'>
+        <div id='trail-info' class='trail-info-container'></div>
+      </div>
+    </div>
+  
+
+  </body>
+</html>
