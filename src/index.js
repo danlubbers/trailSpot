@@ -1,6 +1,9 @@
 import "../src/style.scss";
 
 // Global Variables / State
+const apiTrailsKey = config.API_KEY_REI;
+const apiOpenCageKey = config.API_KEY_OPENCAGE;
+const cors = `https://cors-anywhere.herokuapp.com/`;
 let count = 0;
 let cityInput = '';
 let stateInput = '';
@@ -9,13 +12,11 @@ let stateInput = '';
 // Get User Input
 const citySearch = document.querySelector('#city-search');
 citySearch.addEventListener('blur', e => {
-  console.log(e.target.value);
   cityInput = e.target.value
 });
 
 const stateSearch = document.querySelector('#state-search');
 stateSearch.addEventListener('blur', e => {
-  console.log(e.target.value);
   stateInput = e.target.value
 });
 
@@ -33,9 +34,6 @@ const searchUserLocation = () => {
 // *** Makes at least 1 async call *** //
       ( async () => {
         try {
-          const cors = `https://cors-anywhere.herokuapp.com/`;
-          // const apiKey = config.API_KEY;
-          const apiKey = '200317067-bb02b30d1d856f69f66afd74e01891b3';
 
 // *** Uses Axios & Async/Await *** //
           const userLocation = await axios.get(`https://ipapi.co/json/`);
@@ -54,11 +52,11 @@ const searchUserLocation = () => {
           const region = document.querySelector('#region');
           region.textContent = `${userLocation.data.region}`;
 
-          const trails = await axios.get(`${cors}https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${long}&maxDistance=10&key=${apiKey}`);
+          const trails = await axios.get(`${cors}https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${long}&maxDistance=10&key=${apiTrailsKey}`);
           console.log(trails.data.trails[0].name);
 
           // STATIC TESTING for Boulder, CO
-          // const trails = await axios.get(`${cors}https://www.hikingproject.com/data/get-trails?lat=40.0150&lon=-105.2705&maxDistance=10&key=${apiKey}`);
+          // const trails = await axios.get(`${cors}https://www.hikingproject.com/data/get-trails?lat=40.0150&lon=-105.2705&maxDistance=10&key=${apiTrailsKey}`);
 
           // const name = document.querySelector('#name');
           // name.textContent = trails.data.trails[0].name;
@@ -109,13 +107,8 @@ apiLocator.addEventListener("click", searchUserLocation);
 
 const searchUserInput = () => {
 
-  if(!cityInput && !stateInput) alert('You can not search without first adding a city and state')
+  if(!cityInput && !stateInput) alert('You can not search without first adding a city and state');
 
-  const cors = `https://cors-anywhere.herokuapp.com/`;
-  // OpenCageData API
-  const apiOpenCageKey=`ea27d74cb98447fabd597d1a5d1a8c8b`;
-  // Rei Trails API
-  const apiTrailsKey = '200317067-bb02b30d1d856f69f66afd74e01891b3';
 
   
   ( async () => {
@@ -136,9 +129,14 @@ const searchUserInput = () => {
       areaContainer.style.display = "flex";
 
       const city = document.querySelector('#city');
-      city.textContent = `${cityInput}`;
+      // Capitalizes every first letter
+      let cityInputCaps = cityInput.split(' ').map(word => {
+        return word.slice(0, 1).toUpperCase() + word.slice(1);
+      }).join(' ');
+
+      city.textContent = `${cityInputCaps}`;
       const region = document.querySelector('#region');
-      region.textContent = `${stateInput}`;
+      region.textContent = `${stateInput.toUpperCase()}`;
 
       const trails = await axios.get(`${cors}https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${long}&maxDistance=10&key=${apiTrailsKey}`);
       console.log(trails.data);
