@@ -19,7 +19,7 @@ A simple app that gets the users location and gives a selection of trails around
 * [x] You must show and hide DOM elements on the screen.
 * [x] You must handle at least three different events.
 * [ ] You must handle user input somewhere within the project. (For example, handle a search engine or display text that the user typed somewhere on the page).
-* [ ] Limit your use of global variables. You can do this by organizing yours code.
+* [ ] Limit your use of global variables. You can do this by organizing your code.
 * [x] You must create a new repository for this project. Everyone in the group should be contributors.
 
 
