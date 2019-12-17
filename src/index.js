@@ -1,4 +1,5 @@
 import "../src/style.scss";
+import config from '../config.js';
 
 // Global Variables / State
 const apiTrailsKey = config.API_KEY_REI;
