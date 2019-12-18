@@ -46,8 +46,8 @@ const searchUserLocation = () => {
           // console.log('Long: ', long);
 // *** Shows and hide dom elements *** //
           // This shows the hidden text until after the user clicks the location search button
-          const areaContainer = document.querySelector('#area-container');
-          areaContainer.style.display = "flex";
+          const locationContainer = document.querySelector('#location-results-container');
+          locationContainer.style.display = "flex";
 
           const city = document.querySelector('#city');
           city.textContent = `${userLocation.data.city}`;
@@ -66,12 +66,13 @@ const searchUserLocation = () => {
         // let list = document.createElement('ul');
         // list.className = 'trail-list';
 // *** Must use at least 1 higher order function *** //
-        let trailInfo = trails.data.trails.map((e, i) => {
+        let trailInfo = trails.data.trails.map((e, i) => {          
           return `
               <div key='${++i}' style=' margin: 20px 0;
                                         padding: 0;
                                         display: flex;
                                         flex-direction: column;
+                                        align-items: center;
               '>
                 <h2 style='margin: 5px 0; padding-left: 5px;'>${e.name}</h2>
                 <h3 style='margin: 5px 0; padding-left: 5px;'>${e.location}</h3>
@@ -91,10 +92,10 @@ const searchUserLocation = () => {
           `;
         }).join('');
 
-        // console.log(Array.isArray(trailInfo));
-        // console.log(typeof trailInfo);
+        console.log(Array.isArray(trailInfo));
+        console.log(typeof trailInfo);
         
-        // turn a string into a DOM element
+        // turns a string into a DOM element
         const trailInfoFragment = document.createRange().createContextualFragment(trailInfo)
         console.log(typeof trailInfoFragment);
         
@@ -187,3 +188,13 @@ apiLocator.addEventListener("click", searchUserLocation);
 
 // const userSearchInput = document.querySelector('#userSearchInput');
 // userSearchInput.addEventListener("click", searchUserInput);
+
+
+const clearBtn = document.querySelector('#clearBtn');
+clearBtn.addEventListener('click', () => {
+
+  const locationContainer = document.querySelector('#location-results-container');
+  locationContainer.style.display = 'none';
+
+  count--;
+});

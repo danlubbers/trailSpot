@@ -15,7 +15,7 @@ h1 {
   /* margin: 10px 0; */
 }
 
-h3 {
+h2 {
   padding-right: 10px;
 }
 
@@ -70,64 +70,73 @@ input {
   // background-color: green;
 }
 
+.location-results-container {
+  width: 100%;
+  // background-color: blue;
+  display: none;
+  flex-direction: column;
 
-.area-container {
-  display: none; 
-  margin: 10px 0;
-  font-size: 1.2em;
-  // background-color: yellow; 
 
-  .city-state {
-    display: flex;
-    flex-direction: row;
-    // background-color: blue; 
-    
-  }
-}
-
-.trail-container {
-  // background-color: yellow;
-  .trail-info-container {
+  .area-container {
+    width: 100vw;
     display: flex; 
-    align-items: flex-end; 
-    white-space: pre-wrap;  // This is to use the \n newline in the template string in variable trailInfo */ 
-    background-color: orange;
-    
-    .trail-list {
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      background-color: red; 
-    }
-    
-    .trail-image {
-      width: 400px;
-      height: 100%;
-    }
-    
-    h4 {
-      padding: 0 10px;
-    }
-    
-    li {
-      list-style-type: none;
-    }
-    
-    .trail-info {
-      padding: 5px 0;
-    }
+    flex-direction: row;
+    justify-content: center;
+    font-size: 1.2em;
+    // background-color: yellow; 
 
-    .trail-image-container {
-      background-color: blue;
-    }
-    
-    .horizontal-line {
-      margin: 20px 0;
-      display: block;
-      overflow: hidden;
-      border-style: solid;
-      border-width: 1px;
-      color: rgb(150, 150, 150);
+    .city-state {
+      display: flex;
+      align-items: center;
+      // background-color: blue; 
+      
     }
   }
 }
+
+// .trail-container {
+//   // background-color: yellow;
+//   .trail-info-container {
+//     display: flex; 
+//     align-items: flex-end; 
+//     white-space: pre-wrap;  // This is to use the \n newline in the template string in variable trailInfo */ 
+//     background-color: orange;
+    
+    // .trail-list {
+    //   padding: 0;
+    //   display: flex;
+    //   flex-direction: column;
+    //   background-color: red; 
+    // }
+    
+    // .trail-image {
+    //   width: 400px;
+    //   height: 100%;
+    // }
+    
+    // h4 {
+    //   padding: 0 10px;
+    // }
+    
+    // li {
+    //   list-style-type: none;
+    // }
+    
+    // .trail-info {
+    //   padding: 5px 0;
+    // }
+
+    // .trail-image-container {
+    //   background-color: blue;
+    // }
+    
+    // .horizontal-line {
+    //   margin: 20px 0;
+    //   display: block;
+    //   overflow: hidden;
+    //   border-style: solid;
+    //   border-width: 1px;
+    //   color: rgb(150, 150, 150);
+    // }
+  // }
+// }
