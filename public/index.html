@@ -15,14 +15,16 @@
     </header>
 
     <div class='search-container search-container-click'>
-      <h2>Seach for an area based on your location</h2>
+      <h2>Search for an area based on your current location</h2>
       <button id='apiLocator' class='apiLocator'>Search</button>
     </div>
     <div class='search-container search-container-input'>
       <h2>Search for an area by city & state</h2> <input id='city-search' class='city-search' type="text" placeholder="Ex. Saratoga Springs"><input id='state-search' class='state-search' type="text" placeholder="Ex. NY">
       <button id='userSearchInput' class='userSearchInput'>Search</button>
     </div>
-
+    <div class='clear-button-container'>
+      <button id='clearBtn' class='clear-button'>CLEAR RESULTS</button>
+    </div>
     <div id='location-results-container' class='location-results-container'>
       <div id='area-container' class='area-container'>
         <h2>Based on your location of 
@@ -32,7 +34,7 @@
       </div> 
     
       <div class='trail-container'>
-        <div id='trail-info' class='trail-info-container'></div>
+        <!-- <div id='trail-info' class='trail-info-container'></div> -->
       </div>
     </div>
 
@@ -43,8 +45,9 @@
           <h3 id='city'></h3> <h3 id='region'></h3> 
       </div> 
     
-      <div class='trail-container'>
-        <div id='trail-info' class='trail-info-container'></div>
+      <div id='trail-container' class='trail-container'>
+        <!-- <div id='trail-info' class='trail-info-container'></div> -->
+        <!-- <div id='trail-image-container' class='trail-image-container'></div> -->
       </div>
     </div>
   
