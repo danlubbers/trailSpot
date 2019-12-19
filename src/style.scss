@@ -1,4 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+$font: roboto;
+
 body {
+  margin: 0 auto;
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -7,12 +12,13 @@ body {
   flex-direction: column;
   background-color: rgb(225, 225, 225);
 }
-h1, h2, h3, h4, h5, h6 {
-  margin: 0;
+p {
+  font-family: $font;
 }
 
-h1 {
-  /* margin: 10px 0; */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: $font;
 }
 
 h2 {
@@ -24,7 +30,6 @@ header {
   width: 100vw; 
   display: flex; 
   justify-content: center; 
-  // background-color: green; 
 }
 
 button {
@@ -70,7 +75,7 @@ input {
   // background-color: green;
 }
 
-.location-results-container {
+.location-results-container, .search-results-container {
   width: 100%;
   // background-color: blue;
   display: none;
