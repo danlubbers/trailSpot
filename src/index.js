@@ -15,6 +15,7 @@ let stateInput = '';
 // Get User Input
 const citySearch = document.querySelector('#city-search');
 citySearch.addEventListener('blur', e => {
+// *** NO Cross Site Scripting Vulnerabilities *** //
   const clean = sanitize(e.target.value, {
     FORBID_ATTR: ['width', 'height', 'style'],
     FORBID_TAGS: ['style'],
@@ -31,20 +32,21 @@ stateSearch.addEventListener('blur', e => {
   stateInput = clean;
 });
 
-// console.log('CITY: ', cityInput);
-// console.log('State: ', stateInput);
-
-
 // *** Uses at least 1 arrow function *** //
 const searchUserLocation = () => {
   // This stops the page from hitting the api multiple times if user keeps clicking the search button
   console.log(count);
+  // const locationDIV = document.createElement('div');
+  // console.log(locationDIV);
+  
+  // locationDIV.setAttribute('id', 'trail-location-container');
+  // locationDIV.classList.add('trail-location-container');
+  
   
   if(count < 1) {
 
     // const trailContainer = document.querySelector('#trail-search-container');
     // trailContainer.remove();
-    
 
 // *** Makes at least 1 async call *** //
       ( async () => {
@@ -62,9 +64,9 @@ const searchUserLocation = () => {
           const locationContainer = document.querySelector('#location-results-container');
           locationContainer.style.display = "flex";
 
-          const city = document.querySelector('#city');
-          city.textContent = `${userLocation.data.city}`;
-          const region = document.querySelector('#region');
+          const city = document.querySelector('#city-text-location');
+          city.textContent = `${userLocation.data.city},`;
+          const region = document.querySelector('#region-text-location');
           region.textContent = `${userLocation.data.region}`;
 
           // const trails = await axios.get(`${cors}https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${long}&maxDistance=10&key=${apiTrailsKey}`);
@@ -75,6 +77,7 @@ const searchUserLocation = () => {
 
 
 // *** Must use at least 1 higher order function *** //
+// *** Must store content in simple data structures *** //
         let trailInfo = trails.data.trails.map((e, i) => {          
           return `
               <div key='${++i}' style=' margin: 20px 0;
@@ -102,15 +105,19 @@ const searchUserLocation = () => {
           `;
         }).join('');
 
-        console.log(Array.isArray(trailInfo));
-        console.log(typeof trailInfo);
+        // console.log(Array.isArray(trailInfo));
+        // console.log(typeof trailInfo);
         
         // turns a string into a DOM element
         const trailInfoFragment = document.createRange().createContextualFragment(trailInfo)
-        console.log(typeof trailInfoFragment);
+        // console.log(trailInfoFragment);
         
-        const trailContainer = document.querySelector('#trail-location-container')
-        trailContainer.appendChild(trailInfoFragment);
+        // *** <-- ISSUE RIGHT HERE after I created locationDIV on Line 39--> 
+          const trailContainer = document.querySelector('#trail-location-container')
+          trailContainer.appendChild(trailInfoFragment);
+          // console.log(trailContainer);
+        
+        
         
       } catch (err) {
         return console.error(err)
@@ -135,8 +142,8 @@ const searchUserInput = () => {
 
   ( async () => {
 
-    console.log('CITY: ', cityInput);
-    console.log('State: ', stateInput);
+    // console.log('CITY: ', cityInput);
+    // console.log('State: ', stateInput);
     
     try {
 
@@ -146,21 +153,23 @@ const searchUserInput = () => {
       // console.log(userInput.data.results[0].geometry);
 
       const lat = userInput.data.results[0].geometry.lat;
-      console.log('lat', lat);
+      // console.log('lat', lat);
       const long = userInput.data.results[0].geometry.lng;
-      console.log('long', long);
+      // console.log('long', long);
       
       const searchContainer = document.querySelector('#search-results-container');
       searchContainer.style.display = "flex";
 
-      const city = document.querySelector('#city');
+      const city = document.querySelector('#city-text-search');
       // Capitalizes every first letter
       let cityInputCaps = cityInput.split(' ').map(word => {
         return word.slice(0, 1).toUpperCase() + word.slice(1);
       }).join(' ');
-
+  
       city.textContent = `${cityInputCaps}`;
-      const region = document.querySelector('#region');
+      console.log('textcontent', city.textContent);
+      
+      const region = document.querySelector('#region-text-search');
       region.textContent = `${stateInput.toUpperCase()}`;
 
       const trails = await axios.get(`${cors}https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${long}&maxDistance=10&key=${apiTrailsKey}`);
@@ -198,14 +207,11 @@ const searchUserInput = () => {
       
       // turns a string into a DOM element
       const trailInfoFragment = document.createRange().createContextualFragment(trailInfo)
-      console.log(trailInfoFragment);
+      // console.log(trailInfoFragment);
       
 
       const trailSearchContainer = document.querySelector('#trail-search-container');
       trailSearchContainer.appendChild(trailInfoFragment);
-
-
-
 
     } catch (err) {
       return console.error(err)
@@ -216,15 +222,15 @@ const searchUserInput = () => {
 const userSearchInput = document.querySelector('#userSearchInput');
 userSearchInput.addEventListener("click", searchUserInput);
 
-// Currently hides display, but if search again appends results which is not good
+// Currently hides display, but if searched again appends results which is not good
 const clearBtn = document.querySelector('#clearBtn');
 clearBtn.addEventListener('click', () => {
 
-  const locationContainer = document.querySelector('#location-results-container');
-  locationContainer.style.display = 'none';
+  // const locationContainer = document.querySelector('#location-results-container');
+  // locationContainer.remove();
 
-  const searchContainer = document.querySelector('#search-results-container');
-  searchContainer.style.display = 'none';
+  // const searchContainer = document.querySelector('#search-results-container');
+  // searchContainer.remove();
 
   count = 0;
 });
