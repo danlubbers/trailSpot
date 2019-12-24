@@ -57,18 +57,21 @@ input {
   font-size: 1rem;
 }
 
+  
 .search-container {
   margin: 10px 0;
   display: flex;
-
-  .city-search{
-    width: 200px;
-  }
   
+  .city-search{
+    width: 200px; 
+  }
+    
   .state-search{
     width: 60px;
   }
 }
+
+
 
 .clear-button-container {
   margin: 20px 0;

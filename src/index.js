@@ -12,6 +12,35 @@ let cityInput = '';
 let stateInput = '';
 
 //  *** Handling User Input *** //
+
+// const form = document.querySelector("#form");
+// form.addEventListener("submit", event => {
+//   event.preventDefault();
+//   const elements = [...event.target.elements].filter(element =>
+//     element.matches("input")
+//   );
+//   // console.log('FORM elements ', elements);
+
+  
+//   const cleanCity = sanitize(elements[0].value, {
+//     FORBID_ATTR: ['width', 'height', 'style'],
+//     FORBID_TAGS: ['style'],
+//   }) 
+//   cityInput = cleanCity
+//   console.log(cleanCity);
+//   console.log(cityInput);
+  
+//   const cleanState = sanitize(elements[1].value, {
+//     FORBID_ATTR: ['width', 'height', 'style'],
+//     FORBID_TAGS: ['style'],
+//   })
+//   stateInput = cleanState;
+//   console.log(cleanState);
+//   console.log(stateInput);
+// });
+
+
+
 // Get User Input
 const citySearch = document.querySelector('#city-search');
 citySearch.addEventListener('blur', e => {
@@ -36,13 +65,16 @@ stateSearch.addEventListener('blur', e => {
 const searchUserLocation = () => {
   // This stops the page from hitting the api multiple times if user keeps clicking the search button
   console.log(count);
-  // const locationDIV = document.createElement('div');
-  // console.log(locationDIV);
+
+  // If location has already been searched this unhides the location-results-container div to reveal the trails and does not hit the API multiple times
+  const locationContainer = document.querySelector('#location-results-container');
+  console.log(locationContainer.style.display);
   
-  // locationDIV.setAttribute('id', 'trail-location-container');
-  // locationDIV.classList.add('trail-location-container');
+  if(locationContainer.style.display === 'none') {
+    locationContainer.style.display = 'flex';
+  }
   
-  
+  // Prevents multiple hits or reloads of the API with the same content
   if(count < 1) {
 
     // const trailContainer = document.querySelector('#trail-search-container');
@@ -69,11 +101,11 @@ const searchUserLocation = () => {
           const region = document.querySelector('#region-text-location');
           region.textContent = `${userLocation.data.region}`;
 
-          // const trails = await axios.get(`${cors}https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${long}&maxDistance=10&key=${apiTrailsKey}`);
-          // console.log(trails.data.trails[0].name);
+          const trails = await axios.get(`${cors}https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${long}&maxDistance=10&key=${apiTrailsKey}`);
+          console.log(trails.data.trails[0].name);
 
           // STATIC TESTING for Boulder, CO
-          const trails = await axios.get(`${cors}https://www.hikingproject.com/data/get-trails?lat=40.0150&lon=-105.2705&maxDistance=10&key=${apiTrailsKey}`);
+          // const trails = await axios.get(`${cors}https://www.hikingproject.com/data/get-trails?lat=40.0150&lon=-105.2705&maxDistance=10&key=${apiTrailsKey}`);
 
 
 // *** Must use at least 1 higher order function *** //
@@ -226,11 +258,15 @@ userSearchInput.addEventListener("click", searchUserInput);
 const clearBtn = document.querySelector('#clearBtn');
 clearBtn.addEventListener('click', () => {
 
-  // const locationContainer = document.querySelector('#location-results-container');
-  // locationContainer.remove();
+  const locationContainer = document.querySelector('#location-results-container');
+  console.log(locationContainer.style.display);
+  
+  if(locationContainer.style.display === 'flex') {
+    locationContainer.style.display = 'none'
+  }
 
   // const searchContainer = document.querySelector('#search-results-container');
   // searchContainer.remove();
 
-  count = 0;
+  // count = 0;
 });
