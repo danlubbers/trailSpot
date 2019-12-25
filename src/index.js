@@ -167,6 +167,13 @@ const searchUserInput = () => {
 
   if(!cityInput && !stateInput) alert('You can not search without first adding a city and state');
 
+  const locationContainer = document.querySelector('#location-results-container');
+  console.log(locationContainer.style.display);
+  
+  if(locationContainer.style.display === 'flex') {
+    locationContainer.style.display = 'none';
+  }
+
   // This deletes the previous location based search node 
   // const trailLocationContainer = document.querySelector('#trail-location-container');
   // trailLocationContainer.remove();
@@ -264,9 +271,18 @@ clearBtn.addEventListener('click', () => {
   if(locationContainer.style.display === 'flex') {
     locationContainer.style.display = 'none'
   }
+  
+  const searchContainer = document.querySelector('#search-results-container');
+  console.log(searchContainer.style.display);
+  
+  if(searchContainer.style.display === 'flex') {
+    searchContainer.style.display = 'none'
+  }
 
-  // const searchContainer = document.querySelector('#search-results-container');
-  // searchContainer.remove();
-
+  // This clears/resets the searched content and input fields
+  document.querySelector('#trail-search-container').innerHTML = '';
+  const inputs = Object.values(document.querySelectorAll('input'));
+  let clearInputValues = inputs.map(e => e.value = '')
+ 
   // count = 0;
 });
