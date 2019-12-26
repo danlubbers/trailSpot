@@ -66,6 +66,10 @@ const searchUserLocation = () => {
   // This stops the page from hitting the api multiple times if user keeps clicking the search button
   console.log(count);
 
+
+  // Resets the trail-container so multiple different searches are not appended
+  document.querySelector('#trail-search-container').innerHTML = '';
+
   // If location has already been searched this unhides the location-results-container div to reveal the trails and does not hit the API multiple times
   const locationContainer = document.querySelector('#location-results-container');
   const searchContainer = document.querySelector('#search-results-container');
@@ -74,17 +78,11 @@ const searchUserLocation = () => {
   
   if(locationContainer.style.display === 'none') {
     locationContainer.style.display = 'flex';
-  }
-
-  if(searchContainer.style.display === 'flex') {
     searchContainer.style.display = 'none';
   }
   
   // Prevents multiple hits or reloads of the API with the same content
   if(count < 1) {
-
-    // const trailContainer = document.querySelector('#trail-search-container');
-    // trailContainer.remove();
 
 // *** Makes at least 1 async call *** //
       ( async () => {
@@ -173,18 +171,21 @@ const searchUserInput = () => {
 
   if(!cityInput && !stateInput) alert('You can not search without first adding a city and state');
 
+  // Shows/Hides the appropriate container content
   const locationContainer = document.querySelector('#location-results-container');
   const searchContainer = document.querySelector('#search-results-container');
   console.log('Location: ', locationContainer.style.display);
   console.log('Search: ', searchContainer.style.display);
   
+  // Resets the trail-container so multiple different searches are not appended
+  document.querySelector('#trail-search-container').innerHTML = '';
+
   if(locationContainer.style.display === 'flex') {
     locationContainer.style.display = 'none';
-  }
-  if(searchContainer.style.display === 'none') {
     searchContainer.style.display = 'flex';
   }
 
+  console.log('isSearch: ', searchContainer.style.display);
   
 
   ( async () => {
@@ -292,7 +293,12 @@ clearBtn.addEventListener('click', () => {
   }
 
   // This clears/resets the searched content and input fields
-  document.querySelector('#trail-search-container').innerHTML = '';
+  // document.querySelector('#trail-search-container').innerHTML = '';
+
+  // const inputs = Object.values(document.querySelectorAll('input'));
+  // let clearInputValues = inputs.map(e => e.value)
+  // console.log(clearInputValues);
+  
  
   // count = 0;
 });
