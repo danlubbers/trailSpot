@@ -78,8 +78,8 @@ const searchUserLocation = () => {
   
   if(locationContainer.style.display === 'none') {
     locationContainer.style.display = 'flex';
-    searchContainer.style.display = 'none';
   }
+  searchContainer.style.display = 'none';
   
   // Prevents multiple hits or reloads of the API with the same content
   if(count < 1) {
