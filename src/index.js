@@ -68,10 +68,16 @@ const searchUserLocation = () => {
 
   // If location has already been searched this unhides the location-results-container div to reveal the trails and does not hit the API multiple times
   const locationContainer = document.querySelector('#location-results-container');
-  console.log(locationContainer.style.display);
+  const searchContainer = document.querySelector('#search-results-container');
+  console.log('Location: ', locationContainer.style.display);
+  console.log('Search: ', searchContainer.style.display);
   
   if(locationContainer.style.display === 'none') {
     locationContainer.style.display = 'flex';
+  }
+
+  if(searchContainer.style.display === 'flex') {
+    searchContainer.style.display = 'none';
   }
   
   // Prevents multiple hits or reloads of the API with the same content
@@ -168,15 +174,17 @@ const searchUserInput = () => {
   if(!cityInput && !stateInput) alert('You can not search without first adding a city and state');
 
   const locationContainer = document.querySelector('#location-results-container');
-  console.log(locationContainer.style.display);
+  const searchContainer = document.querySelector('#search-results-container');
+  console.log('Location: ', locationContainer.style.display);
+  console.log('Search: ', searchContainer.style.display);
   
   if(locationContainer.style.display === 'flex') {
     locationContainer.style.display = 'none';
   }
+  if(searchContainer.style.display === 'none') {
+    searchContainer.style.display = 'flex';
+  }
 
-  // This deletes the previous location based search node 
-  // const trailLocationContainer = document.querySelector('#trail-location-container');
-  // trailLocationContainer.remove();
   
 
   ( async () => {
@@ -252,6 +260,10 @@ const searchUserInput = () => {
       const trailSearchContainer = document.querySelector('#trail-search-container');
       trailSearchContainer.appendChild(trailInfoFragment);
 
+      // This clears the input field back to the placeholder 
+      const inputs = Object.values(document.querySelectorAll('input'));
+      let clearInputValues = inputs.map(e => e.value = '')
+
     } catch (err) {
       return console.error(err)
     }
@@ -281,8 +293,6 @@ clearBtn.addEventListener('click', () => {
 
   // This clears/resets the searched content and input fields
   document.querySelector('#trail-search-container').innerHTML = '';
-  const inputs = Object.values(document.querySelectorAll('input'));
-  let clearInputValues = inputs.map(e => e.value = '')
  
   // count = 0;
 });
