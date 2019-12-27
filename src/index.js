@@ -13,53 +13,178 @@ let stateInput = '';
 
 //  *** Handling User Input *** //
 
-// const form = document.querySelector("#form");
-// form.addEventListener("submit", event => {
-//   event.preventDefault();
-//   const elements = [...event.target.elements].filter(element =>
-//     element.matches("input")
-//   );
-//   // console.log('FORM elements ', elements);
+const form = document.querySelector("#form");
+form.addEventListener("submit", event => {
+  event.preventDefault();
+  const elements = [...event.target.elements].filter(element =>
+    element.matches("input")
+  );
+  console.log('FORM elements ', elements);
+
+  let isValid = true;
+  elements.forEach(element => {
+    if (element.value) {
+      element.classList.remove("error");
+    } else {
+      isValid = false;
+      element.classList.add("error");
+    }
+  });
+
+  if (!isValid) return;
 
   
-//   const cleanCity = sanitize(elements[0].value, {
-//     FORBID_ATTR: ['width', 'height', 'style'],
-//     FORBID_TAGS: ['style'],
-//   }) 
-//   cityInput = cleanCity
-//   console.log(cleanCity);
-//   console.log(cityInput);
+  const cleanCity = sanitize(elements[0].value, {
+    FORBID_ATTR: ['width', 'height', 'style'],
+    FORBID_TAGS: ['style'],
+  }) 
+  cityInput = cleanCity
+  // console.log(cleanCity);
+  // console.log(cityInput);
   
-//   const cleanState = sanitize(elements[1].value, {
-//     FORBID_ATTR: ['width', 'height', 'style'],
-//     FORBID_TAGS: ['style'],
-//   })
-//   stateInput = cleanState;
-//   console.log(cleanState);
-//   console.log(stateInput);
-// });
+  const cleanState = sanitize(elements[1].value, {
+    FORBID_ATTR: ['width', 'height', 'style'],
+    FORBID_TAGS: ['style'],
+  })
+  stateInput = cleanState;
+  // console.log(cleanState);
+  // console.log(stateInput);
+
 
 
 
 // Get User Input
-const citySearch = document.querySelector('#city-search');
-citySearch.addEventListener('blur', e => {
-// *** NO Cross Site Scripting Vulnerabilities *** //
-  const clean = sanitize(e.target.value, {
-    FORBID_ATTR: ['width', 'height', 'style'],
-    FORBID_TAGS: ['style'],
-  }) 
-  cityInput = clean;
+// const citySearch = document.querySelector('#city-search');
+// citySearch.addEventListener('blur', e => {
+// // *** NO Cross Site Scripting Vulnerabilities *** //
+//   const clean = sanitize(e.target.value, {
+//     FORBID_ATTR: ['width', 'height', 'style'],
+//     FORBID_TAGS: ['style'],
+//   }) 
+//   cityInput = clean;
+// });
+
+// const stateSearch = document.querySelector('#state-search');
+// stateSearch.addEventListener('blur', e => {
+//   const clean = sanitize(e.target.value, {
+//     FORBID_ATTR: ['width', 'height', 'style'],
+//     FORBID_TAGS: ['style'],
+//   })
+//   stateInput = clean;
+// });
+
+
+  // Shows/Hides the appropriate container content
+  const locationContainer = document.querySelector('#location-results-container');
+  const searchContainer = document.querySelector('#search-results-container');
+  console.log('Location: ', locationContainer.style.display);
+  console.log('Search: ', searchContainer.style.display);
+  
+  // Resets the trail-container so multiple different searches are not appended
+  document.querySelector('#trail-search-container').innerHTML = '';
+  
+  if(locationContainer.style.display === 'flex') {
+    locationContainer.style.display = 'none';
+    searchContainer.style.display = 'flex';
+  }
+  
+  console.log('isSearch: ', searchContainer.style.display);
+  
+  
+  ( async () => {
+    
+    console.log('CITY: ', cityInput);
+    console.log('State: ', stateInput);  
+    
+    try {
+      
+      // Using the global variables cityInput and stateInput, I inject those values into the api to get the region the user wants to search
+      const userInput = await axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${cityInput}%20${stateInput}&key=${apiOpenCageKey}`);
+      
+      // console.log(userInput.data.results[0].geometry);
+      
+      const lat = userInput.data.results[0].geometry.lat;
+      console.log('lat', lat);
+      const long = userInput.data.results[0].geometry.lng;
+      console.log('long', long);
+      
+      const searchContainer = document.querySelector('#search-results-container');
+      searchContainer.style.display = "flex";
+      
+      const city = document.querySelector('#city-text-search');
+      // Capitalizes every first letter
+      let cityInputCaps = cityInput.split(' ').map(word => {
+        return word.slice(0, 1).toUpperCase() + word.slice(1);
+      }).join(' ');
+      
+      city.textContent = `${cityInputCaps}`;
+      console.log('textcontent', city.textContent);
+      
+      const region = document.querySelector('#region-text-search');
+      region.textContent = `${stateInput.toUpperCase()}`;
+      
+      const trails = await axios.get(`${cors}https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${long}&maxDistance=10&key=${apiTrailsKey}`);
+      console.log(trails.data);
+      
+      let trailInfo = trails.data.trails.map((e, i) => {          
+        return `
+        <div key='${++i}' style=' margin: 20px 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        '>
+        <h2 style='margin: 5px 0; padding-left: 5px;'>${e.name}</h2>
+        <h3 style='margin: 5px 0; padding-left: 5px;'>${e.location}</h3>
+        <p style='padding-left: 5px;' class="">${e.summary}</p>
+        <div style='display: flex; justify-content: center;'>
+        <img style='margin-bottom: 20px; width: 400px; height: 100%; border-radius: 10px;' src='${e.imgSmallMed}' alt='${e.name}' />
+        </div>
+        <div style='  width: 80%;
+        margin: 20px 0;
+        display: block;
+        overflow: hidden;
+        border-style: solid;
+        border-width: 1px;
+        color: rgb(150, 150, 150);
+        '>
+        </div>
+        </div>
+        `;
+      }).join('');
+      
+      // console.log(Array.isArray(trailInfo));
+      // console.log(typeof trailInfo);
+      
+      // turns a string into a DOM element
+      const trailInfoFragment = document.createRange().createContextualFragment(trailInfo)
+      // console.log(trailInfoFragment);
+      
+      
+      const trailSearchContainer = document.querySelector('#trail-search-container');
+      trailSearchContainer.appendChild(trailInfoFragment);
+      
+      // This clears the input field back to the placeholder 
+      const inputs = Object.values(document.querySelectorAll('input'));
+      inputs.forEach(e => e.value = '')
+      console.log(inputs);
+      
+      // cityInput = '';
+      // stateInput = '';
+      
+      
+      
+    } catch (err) {
+      return console.error(err)
+    }
+  }) ();
 });
 
-const stateSearch = document.querySelector('#state-search');
-stateSearch.addEventListener('blur', e => {
-  const clean = sanitize(e.target.value, {
-    FORBID_ATTR: ['width', 'height', 'style'],
-    FORBID_TAGS: ['style'],
-  })
-  stateInput = clean;
-});
+
+
+
+
+
 
 // *** Uses at least 1 arrow function *** //
 const searchUserLocation = () => {
@@ -126,7 +251,7 @@ const searchUserLocation = () => {
                 <h3 style='margin: 5px 0; padding-left: 5px;'>${e.location}</h3>
                 <p style='padding-left: 5px;' class="">${e.summary}</p>
                 <div style='display: flex; justify-content: center;'>
-                <img style='margin-bottom: 20px; width: 400px; height: 100%;' src='${e.imgSmallMed}' alt='${e.name}' />
+                <img style='margin-bottom: 20px; width: 400px; height: 100%; border-radius: 10px;' src='${e.imgSmallMed}' alt='${e.name}' />
                 </div>
                 <div style='  width: 80%;
                               margin: 20px 0;
@@ -167,117 +292,13 @@ const apiLocator = document.querySelector('#apiLocator');
 apiLocator.addEventListener("click", searchUserLocation);
 
 
-const searchUserInput = () => {
 
-  if(!cityInput && !stateInput) alert('You can not search without first adding a city and state');
 
-  // Shows/Hides the appropriate container content
-  const locationContainer = document.querySelector('#location-results-container');
-  const searchContainer = document.querySelector('#search-results-container');
-  console.log('Location: ', locationContainer.style.display);
-  console.log('Search: ', searchContainer.style.display);
-  
-  // Resets the trail-container so multiple different searches are not appended
-  document.querySelector('#trail-search-container').innerHTML = '';
 
-  if(locationContainer.style.display === 'flex') {
-    locationContainer.style.display = 'none';
-    searchContainer.style.display = 'flex';
-  }
-
-  console.log('isSearch: ', searchContainer.style.display);
-  
-
-  ( async () => {
-
-    // console.log('CITY: ', cityInput);
-    // console.log('State: ', stateInput);
-    
-    try {
-
-      // Using the global variables cityInput and stateInput, I inject those values into the api to get the region the user wants to search
-      const userInput = await axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${cityInput}%20${stateInput}&key=${apiOpenCageKey}`);
-      
-      // console.log(userInput.data.results[0].geometry);
-
-      const lat = userInput.data.results[0].geometry.lat;
-      // console.log('lat', lat);
-      const long = userInput.data.results[0].geometry.lng;
-      // console.log('long', long);
-      
-      const searchContainer = document.querySelector('#search-results-container');
-      searchContainer.style.display = "flex";
-
-      const city = document.querySelector('#city-text-search');
-      // Capitalizes every first letter
-      let cityInputCaps = cityInput.split(' ').map(word => {
-        return word.slice(0, 1).toUpperCase() + word.slice(1);
-      }).join(' ');
-  
-      city.textContent = `${cityInputCaps}`;
-      console.log('textcontent', city.textContent);
-      
-      const region = document.querySelector('#region-text-search');
-      region.textContent = `${stateInput.toUpperCase()}`;
-
-      const trails = await axios.get(`${cors}https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${long}&maxDistance=10&key=${apiTrailsKey}`);
-      console.log(trails.data);
-
-      let trailInfo = trails.data.trails.map((e, i) => {          
-        return `
-            <div key='${++i}' style=' margin: 20px 0;
-                                      padding: 0;
-                                      display: flex;
-                                      flex-direction: column;
-                                      align-items: center;
-            '>
-              <h2 style='margin: 5px 0; padding-left: 5px;'>${e.name}</h2>
-              <h3 style='margin: 5px 0; padding-left: 5px;'>${e.location}</h3>
-              <p style='padding-left: 5px;' class="">${e.summary}</p>
-              <div style='display: flex; justify-content: center;'>
-              <img style='margin-bottom: 20px; width: 400px; height: 100%;' src='${e.imgSmallMed}' alt='${e.name}' />
-              </div>
-              <div style='  width: 80%;
-                            margin: 20px 0;
-                            display: block;
-                            overflow: hidden;
-                             border-style: solid;
-                            border-width: 1px;
-                            color: rgb(150, 150, 150);
-              '>
-              </div>
-            </div>
-        `;
-      }).join('');
-
-      // console.log(Array.isArray(trailInfo));
-      // console.log(typeof trailInfo);
-      
-      // turns a string into a DOM element
-      const trailInfoFragment = document.createRange().createContextualFragment(trailInfo)
-      // console.log(trailInfoFragment);
-      
-
-      const trailSearchContainer = document.querySelector('#trail-search-container');
-      trailSearchContainer.appendChild(trailInfoFragment);
-
-      // This clears the input field back to the placeholder 
-      const inputs = Object.values(document.querySelectorAll('input'));
-      let clearInputValues = inputs.map(e => e.value = '')
-
-    } catch (err) {
-      return console.error(err)
-    }
-  }) ();
-};
-
-const userSearchInput = document.querySelector('#userSearchInput');
-userSearchInput.addEventListener("click", searchUserInput);
-
-// Currently hides display, but if searched again appends results which is not good
+// *** CLEAR/RESET RESULTS AREA *** //
 const clearBtn = document.querySelector('#clearBtn');
 clearBtn.addEventListener('click', () => {
-
+  
   const locationContainer = document.querySelector('#location-results-container');
   console.log(locationContainer.style.display);
   
@@ -291,14 +312,19 @@ clearBtn.addEventListener('click', () => {
   if(searchContainer.style.display === 'flex') {
     searchContainer.style.display = 'none'
   }
-
+  
+  
+  
   // This clears/resets the searched content and input fields
   // document.querySelector('#trail-search-container').innerHTML = '';
-
-  // const inputs = Object.values(document.querySelectorAll('input'));
-  // let clearInputValues = inputs.map(e => e.value)
-  // console.log(clearInputValues);
   
- 
+  // const inputs = Object.values(document.querySelectorAll('input'));
+  // console.log('inputs: ', inputs);
+  // let clearInputValues = inputs.map(e => e.value)
+  // console.log('clearInputs: ', clearInputValues);
+
+  document.querySelector('#form').reset();
+  
+  
   // count = 0;
 });
