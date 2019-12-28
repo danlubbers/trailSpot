@@ -16,18 +16,18 @@ let stateInput = '';
 const form = document.querySelector("#form");
 form.addEventListener("submit", event => {
   event.preventDefault();
-  const elements = [...event.target.elements].filter(element =>
-    element.matches("input")
+  const elements = [...event.target.elements].filter(e =>
+    e.matches("input")
   );
-  console.log('FORM elements ', elements);
+  // console.log('FORM elements ', elements);
 
   let isValid = true;
-  elements.forEach(element => {
-    if (element.value) {
-      element.classList.remove("error");
+  elements.forEach(e => {
+    if (e.value) {
+      e.classList.remove("error");
     } else {
       isValid = false;
-      element.classList.add("error");
+      e.classList.add("error");
     }
   });
 
@@ -77,8 +77,8 @@ form.addEventListener("submit", event => {
   // Shows/Hides the appropriate container content
   const locationContainer = document.querySelector('#location-results-container');
   const searchContainer = document.querySelector('#search-results-container');
-  console.log('Location: ', locationContainer.style.display);
-  console.log('Search: ', searchContainer.style.display);
+  // console.log('Location: ', locationContainer.style.display);
+  // console.log('Search: ', searchContainer.style.display);
   
   // Resets the trail-container so multiple different searches are not appended
   document.querySelector('#trail-search-container').innerHTML = '';
@@ -88,13 +88,13 @@ form.addEventListener("submit", event => {
     searchContainer.style.display = 'flex';
   }
   
-  console.log('isSearch: ', searchContainer.style.display);
+  // console.log('isSearch: ', searchContainer.style.display);
   
   
   ( async () => {
     
-    console.log('CITY: ', cityInput);
-    console.log('State: ', stateInput);  
+    // console.log('CITY: ', cityInput);
+    // console.log('State: ', stateInput);  
     
     try {
       
@@ -104,9 +104,9 @@ form.addEventListener("submit", event => {
       // console.log(userInput.data.results[0].geometry);
       
       const lat = userInput.data.results[0].geometry.lat;
-      console.log('lat', lat);
+      // console.log('lat', lat);
       const long = userInput.data.results[0].geometry.lng;
-      console.log('long', long);
+      // console.log('long', long);
       
       const searchContainer = document.querySelector('#search-results-container');
       searchContainer.style.display = "flex";
@@ -118,7 +118,7 @@ form.addEventListener("submit", event => {
       }).join(' ');
       
       city.textContent = `${cityInputCaps}`;
-      console.log('textcontent', city.textContent);
+      // console.log('textcontent', city.textContent);
       
       const region = document.querySelector('#region-text-search');
       region.textContent = `${stateInput.toUpperCase()}`;
@@ -128,28 +128,28 @@ form.addEventListener("submit", event => {
       
       let trailInfo = trails.data.trails.map((e, i) => {          
         return `
-        <div key='${++i}' style=' margin: 20px 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        '>
-        <h2 style='margin: 5px 0; padding-left: 5px;'>${e.name}</h2>
-        <h3 style='margin: 5px 0; padding-left: 5px;'>${e.location}</h3>
-        <p style='padding-left: 5px;' class="">${e.summary}</p>
-        <div style='display: flex; justify-content: center;'>
-        <img style='margin-bottom: 20px; width: 400px; height: 100%; border-radius: 10px;' src='${e.imgSmallMed}' alt='${e.name}' />
-        </div>
-        <div style='  width: 80%;
-        margin: 20px 0;
-        display: block;
-        overflow: hidden;
-        border-style: solid;
-        border-width: 1px;
-        color: rgb(150, 150, 150);
-        '>
-        </div>
-        </div>
+            <div key='${++i}' style=' margin: 20px 0;
+                                      padding: 0;
+                                      display: flex;
+                                      flex-direction: column;
+                                      align-items: center;
+            '>
+              <h2 style='margin: 5px 0; padding-left: 5px;'>${e.name}</h2>
+              <h3 style='margin: 5px 0; padding-left: 5px;'>${e.location}</h3>
+              <p style='padding-left: 5px;' class="">${e.summary}</p>
+              <div style='display: flex; justify-content: center;'>
+              <img style='margin-bottom: 20px; width: 400px; height: 100%; border-radius: 10px;' src='${e.imgSmallMed}' alt='${e.name}' />
+            </div>
+            <div style='  width: 80%;
+                          margin: 20px 0;
+                          display: block;
+                          overflow: hidden;
+                          border-style: solid;
+                          border-width: 1px;
+                          color: rgb(150, 150, 150);
+              '>
+            </div>
+          </div>
         `;
       }).join('');
       
@@ -167,11 +167,7 @@ form.addEventListener("submit", event => {
       // This clears the input field back to the placeholder 
       const inputs = Object.values(document.querySelectorAll('input'));
       inputs.forEach(e => e.value = '')
-      console.log(inputs);
-      
-      // cityInput = '';
-      // stateInput = '';
-      
+      // console.log(inputs);
       
       
     } catch (err) {
@@ -189,7 +185,7 @@ form.addEventListener("submit", event => {
 // *** Uses at least 1 arrow function *** //
 const searchUserLocation = () => {
   // This stops the page from hitting the api multiple times if user keeps clicking the search button
-  console.log(count);
+  // console.log(count);
 
 
   // Resets the trail-container so multiple different searches are not appended
@@ -198,8 +194,8 @@ const searchUserLocation = () => {
   // If location has already been searched this unhides the location-results-container div to reveal the trails and does not hit the API multiple times
   const locationContainer = document.querySelector('#location-results-container');
   const searchContainer = document.querySelector('#search-results-container');
-  console.log('Location: ', locationContainer.style.display);
-  console.log('Search: ', searchContainer.style.display);
+  // console.log('Location: ', locationContainer.style.display);
+  // console.log('Search: ', searchContainer.style.display);
   
   if(locationContainer.style.display === 'none') {
     locationContainer.style.display = 'flex';
@@ -215,7 +211,7 @@ const searchUserLocation = () => {
 
 // *** Uses Axios & Async/Await *** //
           const userLocation = await axios.get(`https://ipapi.co/json/`);
-          console.log(userLocation);
+          // console.log(userLocation);
           const lat = userLocation.data.latitude;
           const long = userLocation.data.longitude;
           // console.log('Lat: ', lat);
@@ -231,7 +227,7 @@ const searchUserLocation = () => {
           region.textContent = `${userLocation.data.region}`;
 
           const trails = await axios.get(`${cors}https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${long}&maxDistance=10&key=${apiTrailsKey}`);
-          console.log(trails.data.trails[0].name);
+          // console.log(trails.data.trails[0].name);
 
           // STATIC TESTING for Boulder, CO
           // const trails = await axios.get(`${cors}https://www.hikingproject.com/data/get-trails?lat=40.0150&lon=-105.2705&maxDistance=10&key=${apiTrailsKey}`);
@@ -300,14 +296,14 @@ const clearBtn = document.querySelector('#clearBtn');
 clearBtn.addEventListener('click', () => {
   
   const locationContainer = document.querySelector('#location-results-container');
-  console.log(locationContainer.style.display);
+  // console.log(locationContainer.style.display);
   
   if(locationContainer.style.display === 'flex') {
     locationContainer.style.display = 'none'
   }
   
   const searchContainer = document.querySelector('#search-results-container');
-  console.log(searchContainer.style.display);
+  // console.log(searchContainer.style.display);
   
   if(searchContainer.style.display === 'flex') {
     searchContainer.style.display = 'none'
@@ -324,7 +320,5 @@ clearBtn.addEventListener('click', () => {
   // console.log('clearInputs: ', clearInputValues);
 
   document.querySelector('#form').reset();
-  
-  
-  // count = 0;
+
 });

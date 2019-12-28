@@ -11,7 +11,7 @@ A simple app that gets the users location and gives a selection of trails around
 * [x] Your project must make one asynchronous call per person in your group.
 * [x] You must use an aysnchronous library or API that we covered in class (Fetch, Axios and/or Async & Await).
 * [x] You will need at least one API that will return images somewhere within the results. You must display images on the page from this API call.
-* [ ] You must store content in simple data structures (arrays, objects and sets).
+* [x] You must store content in simple data structures (arrays, objects and sets).
 * [x] Your code must contain at least one high order function with arrays (e.g. _Array.forEach_, _Array.map_, _Array.find_, _Array.filter_ and _Array.reduce_).
 * [x] Your code should not have any Cross Site Scripting (XSS) vulnerabilities.
 * [x] You must have at least one arrow function.
