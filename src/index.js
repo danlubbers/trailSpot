@@ -136,7 +136,17 @@ form.addEventListener("submit", event => {
             '>
               <h2 style='margin: 5px 0; padding-left: 5px;'>${e.name}</h2>
               <h3 style='margin: 5px 0; padding-left: 5px;'>${e.location}</h3>
-              <p style='padding-left: 5px;' class="">${e.summary}</p>
+              <h4 style='padding-left: 5px;' class="">${e.summary}</h4>
+
+              <div style='width: 50%; margin: 10px 0;'>
+                <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Trail Length:</strong> <h5>${e.length}mi</h5></div>
+                <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Max Elevation:</strong> <h5>${e.high}</h5></div>
+                <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Min Elevation:</strong> <h5>${e.low}</h5></div>
+                <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Trail Conditions:</strong> <h5>${e.conditionStatus}</h5></div>
+                <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Condition Details:</strong> <h5>${e.conditionDetails}</h5></div>
+                <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Last Date Conditions were updated:</strong> <h5>${e.conditionDate}</h5></div>
+              </div>
+
               <div style='display: flex; justify-content: center;'>
               <img style='margin-bottom: 20px; width: 400px; height: 100%; border-radius: 10px;' src='${e.imgSmallMed}' alt='${e.name}' />
             </div>
@@ -245,7 +255,17 @@ const searchUserLocation = () => {
               '>
                 <h2 style='margin: 5px 0; padding-left: 5px;'>${e.name}</h2>
                 <h3 style='margin: 5px 0; padding-left: 5px;'>${e.location}</h3>
-                <p style='padding-left: 5px;' class="">${e.summary}</p>
+                <h4 style='padding-left: 5px;' class="">${e.summary}</h4>
+
+                <div style='width: 50%; margin: 10px 0;'>
+                  <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Trail Length:</strong> <h5>${e.length}mi</h5></div>
+                  <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Max Elevation:</strong> <h5>${e.high}</h5></div>
+                  <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Min Elevation:</strong> <h5>${e.low}</h5></div>
+                  <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Trail Conditions:</strong> <h5>${e.conditionStatus}</h5></div>
+                  <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Condition Details:</strong> <h5>${e.conditionDetails}</h5></div>
+                  <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Last Date Conditions were updated:</strong> <h5>${e.conditionDate}</h5></div>
+                </div>
+
                 <div style='display: flex; justify-content: center;'>
                 <img style='margin-bottom: 20px; width: 400px; height: 100%; border-radius: 10px;' src='${e.imgSmallMed}' alt='${e.name}' />
                 </div>

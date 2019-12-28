@@ -25,6 +25,10 @@ h2 {
   padding-right: 10px;
 }
 
+h5 {
+  padding-left: 5px;
+}
+
 header {
   margin: 0 0 20px 0;
   width: 100vw; 
@@ -103,5 +107,9 @@ input {
       // background-color: blue; 
       
     }
+  }
+  .trail-search-container {
+    width: 100%;
+    // background-color: blue;
   }
 }
