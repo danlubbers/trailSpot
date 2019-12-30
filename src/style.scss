@@ -100,7 +100,7 @@ form {
   display: none;
   flex-direction: column;
 
-  .area-container, .weather-container {
+  .area-container {
     padding: 5px 0; 
     width: 100vw;
     display: flex; 
@@ -118,13 +118,14 @@ form {
     }
   }
 
-  .weather-container {
+  .weather-container, .weather-search-container {
     width: 100%;
     // background-color: blue;
     display: flex;
+    align-items: center;
     flex-direction: column;
     
-    .weather-details {
+    .weather-details, .weather-search-details {
       width: 300px;
       margin: 10px 0;
       padding: 25px;
@@ -133,16 +134,17 @@ form {
       display: flex;
       flex-direction: column;
       align-items: center;
+      font-size: 1.2em;
       // background-color: rgb(240, 240, 240);
 
-      .temp-container {
+      .temp-container, .temp-search-container {
         margin: 10px 0;
         display: flex;
         flex-direction: row;
         // background-color: yellow;
       }
 
-      .pressure-humidity-container {
+      .pressure-humidity-container, .pressure-humidity-search-container {
         width: 100%;
         margin: 10px 0;
         display: flex;
@@ -150,7 +152,7 @@ form {
         // background-color: green;
       }
 
-      .temp-pressure-buttons {
+      .temp-pressure-buttons, .temp-pressure-search-buttons {
         width: 100%;
         margin: 10px 0;
         display: flex;
