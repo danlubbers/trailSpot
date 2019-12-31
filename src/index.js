@@ -177,42 +177,54 @@ form.addEventListener("submit", event => {
       
       const trails = await axios.get(`${cors}https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${long}&maxDistance=10&key=${apiTrailsKey}`);
       console.log(trails.data);
+
+      // const noTrails = document.querySelector('#found-trails');
+      // if(trails.data.trails.length === 0) {
+      //   console.log(noTrails);
+      //   // noTrails.textContent = 'We have not found any trails in this area'
+        
+      // }
       
       let trailInfo = trails.data.trails.map((e, i) => {          
         return `
-            <div key='${++i}' style=' margin: 20px 0;
-                                      padding: 0;
-                                      display: flex;
-                                      flex-direction: column;
-                                      align-items: center;
-            '>
-              <h2 style='margin: 5px 0; padding-left: 5px;'>${e.name}</h2>
-              <h3 style='margin: 5px 0; padding-left: 5px;'>${e.location}</h3>
-              <h4 style='padding-left: 5px;' class="">${e.summary}</h4>
-
-              <div style='width: 50%; margin: 10px 0;'>
-                <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Trail Length:</strong> <h5>${e.length}mi</h5></div>
-                <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Max Elevation:</strong> <h5>${e.high}</h5></div>
-                <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Min Elevation:</strong> <h5>${e.low}</h5></div>
-                <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Trail Conditions:</strong> <h5>${e.conditionStatus}</h5></div>
-                <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Condition Details:</strong> <h5>${e.conditionDetails}</h5></div>
-                <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Last Date Conditions were updated:</strong> <h5>${e.conditionDate}</h5></div>
-              </div>
-
-              <div style='display: flex; justify-content: center;'>
-              <img style='margin-bottom: 20px; width: 400px; height: 100%; border-radius: 10px;' src='${e.imgSmallMed}' alt='${e.name}' />
-            </div>
-            <div style='  width: 80%;
-                          margin: 20px 0;
-                          display: block;
-                          overflow: hidden;
-                          border-style: solid;
-                          border-width: 1px;
-                          color: rgb(150, 150, 150);
+              <div key='${++i}' style=' margin: 40px 0;
+                                        padding: 0;
+                                        display: flex;
+                                        flex-direction: column;
+                                        align-items: center;
+                                        
+                                        width: 100%;
               '>
-            </div>
-          </div>
-        `;
+              <div style='width: 600px; display: flex; flex-direction: column; align-items: center;'>
+
+                <h2 style='margin: 5px 0; padding-left: 5px;'>${e.name}</h2>
+                <h3 style='margin: 5px 0; padding-left: 5px;'>${e.location}</h3>
+                <h4 style='margin: 5px 0; padding-left: 20px;'>${e.summary}</h4>
+
+                <div style='width: 100%; margin: 10px 0px 10px 20px;'>
+                  <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Trail Length:</strong> <h5>${e.length}mi</h5></div>
+                  <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Max Elevation:</strong> <h5>${e.high}</h5></div>
+                  <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Min Elevation:</strong> <h5>${e.low}</h5></div>
+                  <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Trail Conditions:</strong> <h5>${e.conditionStatus}</h5></div>
+                  <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Condition Details:</strong> <h5>${e.conditionDetails}</h5></div>
+                  <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Last Date Conditions were updated:</strong> <h5>${e.conditionDate}</h5></div>
+                </div>
+
+                <div style='display: flex; justify-content: center;'>
+                <img style='margin-bottom: 20px; width: 400px; height: 100%; border-radius: 10px;' src='${e.imgSmallMed}' alt='${e.name}' />
+                </div>
+                <div style='  width: 100%;
+                              margin: 40px 0;
+                              display: block;
+                              overflow: hidden;
+                              border-style: solid;
+                              border-width: 1px;
+                              color: rgb(150, 150, 150);
+                '>
+                </div>
+                </div>
+              </div>
+          `;
       }).join('');
       
       // console.log(Array.isArray(trailInfo));
@@ -371,17 +383,21 @@ const searchUserLocation = () => {
 // *** Must store content in simple data structures *** //
         let trailInfo = trails.data.trails.map((e, i) => {          
           return `
-              <div key='${++i}' style=' margin: 20px 0;
+              <div key='${++i}' style=' margin: 40px 0;
                                         padding: 0;
                                         display: flex;
                                         flex-direction: column;
                                         align-items: center;
+                                        
+                                        width: 100%;
               '>
+              <div style='width: 600px; display: flex; flex-direction: column; align-items: center;'>
+
                 <h2 style='margin: 5px 0; padding-left: 5px;'>${e.name}</h2>
                 <h3 style='margin: 5px 0; padding-left: 5px;'>${e.location}</h3>
-                <h4 style='padding-left: 5px;' class="">${e.summary}</h4>
+                <h4 style='margin: 5px 0; padding-left: 20px;'>${e.summary}</h4>
 
-                <div style='width: 50%; margin: 10px 0;'>
+                <div style='width: 100%; margin: 10px 0px 10px 20px;'>
                   <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Trail Length:</strong> <h5>${e.length}mi</h5></div>
                   <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Max Elevation:</strong> <h5>${e.high}</h5></div>
                   <div style='margin: 5px 0; display: flex; flex-direction: row;'><strong>Min Elevation:</strong> <h5>${e.low}</h5></div>
@@ -393,14 +409,15 @@ const searchUserLocation = () => {
                 <div style='display: flex; justify-content: center;'>
                 <img style='margin-bottom: 20px; width: 400px; height: 100%; border-radius: 10px;' src='${e.imgSmallMed}' alt='${e.name}' />
                 </div>
-                <div style='  width: 80%;
-                              margin: 20px 0;
+                <div style='  width: 100%;
+                              margin: 40px 0;
                               display: block;
                               overflow: hidden;
                               border-style: solid;
                               border-width: 1px;
                               color: rgb(150, 150, 150);
                 '>
+                </div>
                 </div>
               </div>
           `;
