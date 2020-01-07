@@ -145,11 +145,11 @@ form.addEventListener("submit", event => {
             }
           });
 
-// ISSUE upon reload where 1 click goes to false then true immediately and doesn't toggle correctly. THIS ONLY HAPPENS on the second search
+// ISSUE upon reload where 1 click goes to false then true immediately and doesn't toggle correctly.
           // *** Pressure Conversion Button
           const pressureButton = document.querySelector('#pressureSearchBtn');
           pressureButton.addEventListener('click', () => {
-            console.log(!pressure.textContent.match(/mb/));
+            console.log(pressure.textContent);
             if(!pressure.textContent.match(/mb/)) {
               pressure.textContent = 'Pressure: ' + pressureMB + 'mb';    
             } else {
@@ -178,12 +178,13 @@ form.addEventListener("submit", event => {
       const trails = await axios.get(`${cors}https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${long}&maxDistance=10&key=${apiTrailsKey}`);
       console.log(trails.data);
 
-      // const noTrails = document.querySelector('#found-trails');
-      // if(trails.data.trails.length === 0) {
-      //   console.log(noTrails);
-      //   // noTrails.textContent = 'We have not found any trails in this area'
-        
-      // }
+      // If no trails are found this will notify the user, no trails were found in the searched area
+      const noTrails = document.querySelector('#found-trails');
+      if(trails.data.trails.length === 0) {
+        noTrails.textContent = 'We have "NOT" found any trails in the area of:'
+      } else {
+        noTrails.textContent = 'We have found trails around the area of:'
+      }
       
       let trailInfo = trails.data.trails.map((e, i) => {          
         return `
