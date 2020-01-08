@@ -3,6 +3,8 @@ import config from '../config.js';
 import axios from 'axios';
 import { sanitize } from 'dompurify';
 
+import { getWeather } from './weather';
+
 // Global Variables / State
 const apiTrailsKey = config.API_KEY_REI;
 const apiOpenCageKey = config.API_KEY_OPENCAGE;
@@ -12,14 +14,12 @@ let cityInput = '';
 let stateInput = '';
 
 //  *** Handling User Input *** //
-
 const form = document.querySelector("#form");
 form.addEventListener("submit", event => {
   event.preventDefault();
   const elements = [...event.target.elements].filter(e =>
     e.matches("input")
   );
-  // console.log('FORM elements ', elements);
 
   let isValid = true;
   elements.forEach(e => {
@@ -87,79 +87,78 @@ form.addEventListener("submit", event => {
 
 
       const weatherAPI = config.API_KEY_WEATHER;
-          const weather = await axios.get(`${cors}http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${weatherAPI}`);
-          // console.log(weather);
+      const weather = await axios.get(`${cors}http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${weatherAPI}`);
+      // console.log(weather);
           
 
-          // *** WEATHER ICONS ***
-          const icon = document.querySelector('#weather-search-icon');
-          const weatherIcon = weather.data.weather[0].icon;
-          // console.log(weatherIcon);
+      // *** WEATHER ICONS ***
+      const icon = document.querySelector('#weather-search-icon');
+      const weatherIcon = weather.data.weather[0].icon;
+      // console.log(weatherIcon);
           
-          const weatherID = `http://openweathermap.org/img/wn/${weatherIcon}@2x.png`;
-          // console.log(weatherID);
-          icon.src = weatherID;
+      const weatherID = `http://openweathermap.org/img/wn/${weatherIcon}@2x.png`;
+      // console.log(weatherID);
+      icon.src = weatherID;
 
-          // *** WEATHER DESCRIPTION ***
-          const description = document.querySelector('#weather-search-description');
-          const weatherDescription = weather.data.weather[0].description;
-          description.textContent = weatherDescription;
+      // *** WEATHER DESCRIPTION ***
+      const description = document.querySelector('#weather-search-description');
+      const weatherDescription = weather.data.weather[0].description;
+      description.textContent = weatherDescription;
 
-          // *** TEMPERATURE ***
-          let temp = Math.floor(((weather.data.main.temp - 273.15) * 1.8) + 32);
-          // console.log('Weather: ', temp);
+      // *** TEMPERATURE ***
+      let temp = Math.floor(((weather.data.main.temp - 273.15) * 1.8) + 32);
+      // console.log('Weather: ', temp);
       
-          const tempId = document.querySelector('#temp-search');
-          //  const fc = document.querySelector('#fc');
-          tempId.textContent = temp + '°';
+      const tempId = document.querySelector('#temp-search');
+      //  const fc = document.querySelector('#fc');
+      tempId.textContent = temp + '°';
 
 
-          // *** PRESSURE ***
-          const pressureMB = weather.data.main.pressure;
-          const pressureInches = (weather.data.main.pressure * 0.0295301).toFixed(2);
-          // console.log(pressureMB);
+      // *** PRESSURE ***
+      const pressureMB = weather.data.main.pressure;
+      const pressureInches = (weather.data.main.pressure * 0.0295301).toFixed(2);
+      // console.log(pressureMB);
 
-          const pressure = document.querySelector('#weather-search-pressure');
-          pressure.textContent = 'Pressure: ' + pressureMB + 'mb';
+      const pressure = document.querySelector('#weather-search-pressure');
+      pressure.textContent = 'Pressure: ' + pressureMB + 'mb';
           
 
-          // *** HUMIDITY ***
-          const weatherHumidity = weather.data.main.humidity;
-          // console.log(weatherHumidity);
+      // *** HUMIDITY ***
+      const weatherHumidity = weather.data.main.humidity;
+      // console.log(weatherHumidity);
 
-          const humidity = document.querySelector('#weather-search-humidity');
-          humidity.textContent = 'Humidity: ' + weatherHumidity + ' %';
+      const humidity = document.querySelector('#weather-search-humidity');
+      humidity.textContent = 'Humidity: ' + weatherHumidity + ' %';
           
-          // *** Temp Conversion Button
-          const tempButton = document.querySelector('#tempSearchBtn');
-          tempButton.addEventListener('click', () => {
-            console.log('FC: ', fcSearch.textContent);
+      // *** Temp Conversion Button
+      const tempButton = document.querySelector('#tempSearchBtn');
+      tempButton.addEventListener('click', () => {
+        console.log('FC: ', fcSearch.textContent);
             
-            if(fcSearch.textContent === 'F') {
-            const celcius = Math.round((temp - 32) / 1.8);
-            tempId.textContent = celcius + '°';
-            fcSearch.textContent = 'C';
-          } else {
-            tempId.textContent = temp + '°';
-            fcSearch.textContent = 'F';
-            }
-          });
+        if(fcSearch.textContent === 'F') {
+          const celcius = Math.round((temp - 32) / 1.8);
+          tempId.textContent = celcius + '°';
+          fcSearch.textContent = 'C';
+        } else {
+          tempId.textContent = temp + '°';
+          fcSearch.textContent = 'F';
+          }
+        });
 
-// ISSUE upon reload where 1 click goes to false then true immediately and doesn't toggle correctly.
-          // *** Pressure Conversion Button
-          const pressureButton = document.querySelector('#pressureSearchBtn');
-          pressureButton.addEventListener('click', () => {
-            console.log(pressure.textContent);
-            if(!pressure.textContent.match(/mb/)) {
-              pressure.textContent = 'Pressure: ' + pressureMB + 'mb';    
-            } else {
-              pressure.textContent = 'Pressure: ' + pressureInches + 'in';    
-            }
-          });
-          
+// ISSUE upon reload where 1 click goes to false then true immediately and doesn't toggle correctly. It appears it's saving the previous click info and skips every other time.
+      // *** Pressure Conversion Button
+      const pressureButton = document.querySelector('#pressureSearchBtn');
+      pressureButton.addEventListener('click', () => {
+        // console.log(!pressure.textContent.match(/mb/));
+        console.log(pressure.textContent);
+      if(pressure.textContent.match(/mb/)) {
+        pressure.textContent = 'Pressure: ' + pressureInches + 'in'; 
+      } else {
+         pressure.textContent = 'Pressure: ' + pressureMB + 'mb';  
+        }
+      });
+        
 
-
-      
       const searchContainer = document.querySelector('#search-results-container');
       searchContainer.style.display = "flex";
       
@@ -292,73 +291,75 @@ const searchUserLocation = () => {
           // console.log('Lat: ', lat);
           // console.log('Long: ', long);
 
+          getWeather(lat, long);
+
           
-          const weatherAPI = config.API_KEY_WEATHER;
-          const weather = await axios.get(`${cors}http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${weatherAPI}`);
-          console.log(weather);
+          // const weatherAPI = config.API_KEY_WEATHER;
+          // const weather = await axios.get(`${cors}http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${weatherAPI}`);
+          // console.log(weather);
           
 
-          // *** WEATHER ICONS ***
-          const icon = document.querySelector('#weather-icon');
-          const weatherIcon = weather.data.weather[0].icon;
-          // console.log(weatherIcon);
+          // // *** WEATHER ICONS ***
+          // const icon = document.querySelector('#weather-icon');
+          // const weatherIcon = weather.data.weather[0].icon;
+          // // console.log(weatherIcon);
           
-          const weatherID = `http://openweathermap.org/img/wn/${weatherIcon}@2x.png`;
-          // console.log(weatherID);
-          icon.src = weatherID;
+          // const weatherID = `http://openweathermap.org/img/wn/${weatherIcon}@2x.png`;
+          // // console.log(weatherID);
+          // icon.src = weatherID;
 
-          // *** WEATHER DESCRIPTION ***
-          const description = document.querySelector('#weather-description');
-          const weatherDescription = weather.data.weather[0].description;
-          description.textContent = weatherDescription;
+          // // *** WEATHER DESCRIPTION ***
+          // const description = document.querySelector('#weather-description');
+          // const weatherDescription = weather.data.weather[0].description;
+          // description.textContent = weatherDescription;
 
-          // *** TEMPERATURE ***
-          let temp = Math.floor(((weather.data.main.temp - 273.15) * 1.8) + 32);
-          // console.log('Weather: ', temp);
+          // // *** TEMPERATURE ***
+          // let temp = Math.floor(((weather.data.main.temp - 273.15) * 1.8) + 32);
+          // // console.log('Weather: ', temp);
       
-          const tempId = document.querySelector('#temp');
-          //  const fc = document.querySelector('#fc');
-          tempId.textContent = temp + '°';
+          // const tempId = document.querySelector('#temp');
+          // //  const fc = document.querySelector('#fc');
+          // tempId.textContent = temp + '°';
 
 
-          // *** PRESSURE ***
-          const pressureMB = weather.data.main.pressure;
-          const pressureInches = (weather.data.main.pressure * 0.0295301).toFixed(2);
-          // console.log(pressureMB);
+          // // *** PRESSURE ***
+          // const pressureMB = weather.data.main.pressure;
+          // const pressureInches = (weather.data.main.pressure * 0.0295301).toFixed(2);
+          // // console.log(pressureMB);
 
-          const pressure = document.querySelector('#weather-pressure');
-          pressure.textContent = 'Pressure: ' + pressureMB + 'mb';
+          // const pressure = document.querySelector('#weather-pressure');
+          // pressure.textContent = 'Pressure: ' + pressureMB + 'mb';
           
 
-          // *** HUMIDITY ***
-          const weatherHumidity = weather.data.main.humidity;
-          // console.log(weatherHumidity);
+          // // *** HUMIDITY ***
+          // const weatherHumidity = weather.data.main.humidity;
+          // // console.log(weatherHumidity);
 
-          const humidity = document.querySelector('#weather-humidity');
-          humidity.textContent = 'Humidity: ' + weatherHumidity + ' %';
+          // const humidity = document.querySelector('#weather-humidity');
+          // humidity.textContent = 'Humidity: ' + weatherHumidity + ' %';
           
-          // *** Temp Conversion Button
-          const tempButton = document.querySelector('#tempBtn');
-          tempButton.addEventListener('click', () => {
-            if(fc.textContent === 'F') {
-            const celcius = Math.round((temp - 32) / 1.8);
-            tempId.textContent = celcius + '°';
-            fc.textContent = 'C';
-          } else {
-            tempId.textContent = temp + '°';
-            fc.textContent = 'F';
-            }
-          });
+          // // *** Temp Conversion Button
+          // const tempButton = document.querySelector('#tempBtn');
+          // tempButton.addEventListener('click', () => {
+          //   if(fc.textContent === 'F') {
+          //   const celcius = Math.round((temp - 32) / 1.8);
+          //   tempId.textContent = celcius + '°';
+          //   fc.textContent = 'C';
+          // } else {
+          //   tempId.textContent = temp + '°';
+          //   fc.textContent = 'F';
+          //   }
+          // });
 
-          // *** Pressure Conversion Button
-          const pressureButton = document.querySelector('#pressureBtn');
-          pressureButton.addEventListener('click', () => {
-            if(!pressure.textContent.match(/mb/)) {
-              pressure.textContent = 'Pressure: ' + pressureMB + 'mb';    
-            } else {
-              pressure.textContent = 'Pressure: ' + pressureInches + 'in';    
-            }
-          });
+          // // *** Pressure Conversion Button
+          // const pressureButton = document.querySelector('#pressureBtn');
+          // pressureButton.addEventListener('click', () => {            
+          //   if(!pressure.textContent.match(/mb/)) {
+          //     pressure.textContent = 'Pressure: ' + pressureMB + 'mb';    
+          //   } else {
+          //     pressure.textContent = 'Pressure: ' + pressureInches + 'in';    
+          //   }
+          // });
               
         
 
@@ -469,7 +470,10 @@ clearBtn.addEventListener('click', () => {
   if(searchContainer.style.display === 'flex') {
     searchContainer.style.display = 'none'
   }
-
+  
+  // const pressure = document.querySelector('#weather-pressure');
+  // console.log(pressure);
   document.querySelector('#form').reset();
+  
 
 });

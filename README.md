@@ -3,7 +3,7 @@
 </p>
 
 ## Description
-A simple app that gets the users location and gives a selection of trails around the area or the user can search by city/state to find trails for future trips. 
+A simple app that gets the users location and gives a selection of trails around the area or the user can search by city/state to find trails for future trips. Current weather conditions are shown for the searched location as well.
 
 ## Project Requirements
 ---
