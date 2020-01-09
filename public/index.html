@@ -1,100 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TrailSpot</title>
-    <link rel="stylesheet" href="../src/style.scss" type='text/scss'/>
-    <script src="assets/main.js" defer></script>
-  </head>
-  
-  <body>
-    <header>
-      <img src="/assets/images/trailspot.png" alt="trailspot">
-    </header>
 
-    <div class='search-container search-container-click'>
-      <h2>Search for an area based on your current location</h2>
-      <button id='apiLocator' class='apiLocator'>Search</button>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TrailSpot</title>
+  <link rel="stylesheet" href="../src/style.scss" type='text/scss' />
+  <script src="assets/main.js" defer></script>
+</head>
+
+<body>
+  <header>
+    <img src="/assets/images/trailspot.png" alt="trailspot">
+  </header>
+
+  <div class='search-container search-container-click'>
+    <h2>Search for an area based on your current location</h2>
+    <button id='apiLocator' class='apiLocator'>Search</button>
+  </div>
+
+  <form action="POST" name='form' id='form'>
+    <div class='search-container search-input-container'>
+      <h2>Search for an area by city & state</h2> <input id='city-search' class='city-search' type="text"
+        placeholder="Ex. Grand Canyon"><input id='state-search' class='state-search' type="text" placeholder="Ex. AZ">
+      <button id='userSearchInput' class='userSearchInput' type='submit'>Search</button>
     </div>
-
-    <form action="POST" name='form' id='form'>
-      <div class='search-container search-input-container'>
-        <h2>Search for an area by city & state</h2> <input id='city-search' class='city-search' type="text" placeholder="Ex. Grand Canyon"><input id='state-search' class='state-search' type="text" placeholder="Ex. AZ">
-        <button id='userSearchInput' class='userSearchInput' type='submit'>Search</button>
-      </div>
-    </form>
+  </form>
 
 
-    <div class='clear-button-container'>
-      <button id='clearBtn' class='clear-button'>CLEAR RESULTS</button>
-    </div>
+  <div class='clear-button-container'>
+    <button id='clearBtn' class='clear-button'>CLEAR RESULTS</button>
+  </div>
 
-    <div id='location-results-container' class='location-results-container'>
-      <div id='area-container' class='area-container'>
-        <h2>We have found trails around the area of:</h2>
-        <div class="city-state">
-          <h2 id='city-text-location'></h2> 
-          <h2 id='region-text-location'></h2>
-        </div>
-      </div> 
-
-      <div id='weather-container' class='weather-container' >
-        <div id='weather-details' class='weather-details'>
-          <h2>Current Weather</h2>
-          <img id='weather-icon' class='weather-icon'>
-          <h4 id='weather-description' class='weather-description'></h4>
-          <div id='temp-container' class='temp-container'>
-            <h4 id='temp' class="temp"></h4>
-            <h4 id='fc' class="fc">F</h4>
-          </div>
-          <div id='pressure-humidity-container' class='pressure-humidity-container'>
-            <h5 id='weather-pressure' class='weather-pressure'></h5>
-            <h5 id='weather-humidity' class='weather-humidity'></h5>
-          </div>
-          <span id='temp-pressure-buttons' class='temp-pressure-buttons'>
-            <button id='pressureBtn'>IN / MB</button>
-            <button id='tempBtn'>F / C</button>
-          </span>
-        </div>
-      </div>
-      
-      <div id='trail-location-container' class='trail-location-container'>
-      </div>
-    </div>
-    
-    <div id='search-results-container' class='search-results-container'>
-      <div id='area-container' class='area-container'>
-        <h2 id='found-trails'>We have found trails around the area of:</h2>
-        <div class="city-state">
-          <h2 id='city-text-search'></h2> 
-          <h2 id='region-text-search'></h2>
-        </div>
-      </div>
-
-      <div id='weather-search-container' class='weather-search-container' >
-          <div id='weather-search-details' class='weather-search-details'>
-            <h2>Current Weather</h2>
-            <img id='weather-search-icon' class='weather-search-icon'>
-            <h4 id='weather-search-description' class='weather-search-description'></h4>
-            <div id='temp-search-container' class='temp-search-container'>
-              <h4 id='temp-search' class="temp-search"></h4>
-              <h4 id='fcSearch' class="fcSearch">F</h4>
-            </div>
-            <div id='pressure-humidity-search-container' class='pressure-humidity-search-container'>
-              <h5 id='weather-search-pressure' class='weather-search-pressure'></h5>
-              <h5 id='weather-search-humidity' class='weather-search-humidity'></h5>
-            </div>
-            <span id='temp-pressure-search-buttons' class='temp-pressure-search-buttons'>
-              <button id='pressureSearchBtn'>IN / MB</button>
-              <button id='tempSearchBtn'>F / C</button>
-            </span>
-          </div>
-        </div>
-
-      <div id='trail-search-container' class='trail-search-container'>
+  <div id='location-results-container' class='location-results-container'>
+    <div id='area-container' class='area-container'>
+      <h2>We have found trails around the area of:</h2>
+      <div class="city-state">
+        <h2 id='city-text-location'></h2>
+        <h2 id='region-text-location'></h2>
       </div>
     </div>
 
-  </body>
+    <div id='weather-container' class='weather-container'>
+      <div id='weather-details' class='weather-details'>
+        <h2>Current Weather</h2>
+        <img id='weather-icon' class='weather-icon'>
+        <h4 id='weather-description' class='weather-description'></h4>
+        <div id='temp-container' class='temp-container'>
+          <h4 id='temp' class="temp"></h4>
+          <h4 id='fc' class="fc">F</h4>
+        </div>
+        <div id='pressure-humidity-container' class='pressure-humidity-container'>
+          <h5 id='weather-pressure' class='weather-pressure'></h5>
+          <h5 id='weather-humidity' class='weather-humidity'></h5>
+        </div>
+        <span id='temp-pressure-buttons' class='temp-pressure-buttons'>
+          <button id='pressureBtn'>IN / MB</button>
+          <button id='tempBtn'>F / C</button>
+        </span>
+      </div>
+    </div>
+
+    <div id='trail-location-container' class='trail-location-container'>
+    </div>
+  </div>
+
+  <div id='search-results-container' class='search-results-container'>
+    <div id='area-container' class='area-container'>
+      <h2 id='found-trails'>We have found trails around the area of:</h2>
+      <div class="city-state">
+        <h2 id='city-text-search'></h2>
+        <h2 id='region-text-search'></h2>
+      </div>
+    </div>
+
+    <div id='weather-search-container' class='weather-search-container'>
+      <div id='weather-search-details' class='weather-search-details'>
+        <h2>Current Weather</h2>
+        <img id='weather-search-icon' class='weather-search-icon'>
+        <h4 id='weather-search-description' class='weather-search-description'></h4>
+        <div id='temp-search-container' class='temp-search-container'>
+          <h4 id='temp-search' class="temp-search"></h4>
+          <h4 id='fcSearch' class="fcSearch">F</h4>
+        </div>
+        <div id='pressure-humidity-search-container' class='pressure-humidity-search-container'>
+          <h5 id='weather-search-pressure' class='weather-search-pressure'></h5>
+          <h5 id='weather-search-humidity' class='weather-search-humidity'></h5>
+        </div>
+        <span id='temp-pressure-search-buttons' class='temp-pressure-search-buttons'>
+          <button id='pressureSearchBtn'>IN / MB</button>
+          <button id='tempSearchBtn'>F / C</button>
+        </span>
+      </div>
+    </div>
+
+    <div id='trail-search-container' class='trail-search-container'>
+    </div>
+  </div>
+
+</body>
+
 </html>

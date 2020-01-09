@@ -91,12 +91,10 @@ form {
 
 .clear-button-container {
   margin: 20px 0;
-  // background-color: green;
 }
 
 .location-results-container, .search-results-container {
   width: 100%;
-  // background-color: blue;
   display: none;
   flex-direction: column;
 
@@ -108,19 +106,15 @@ form {
     justify-content: center;
     align-items: center;
     font-size: 1.2em;
-    // background-color: yellow; 
 
     .city-state {
       display: flex;
-      align-items: center;
-      // background-color: blue; 
-      
+      align-items: center; 
     }
   }
 
   .weather-container, .weather-search-container {
     width: 100%;
-    // background-color: blue;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -135,13 +129,11 @@ form {
       flex-direction: column;
       align-items: center;
       font-size: 1.2em;
-      // background-color: rgb(240, 240, 240);
 
       .temp-container, .temp-search-container {
         margin: 10px 0;
         display: flex;
         flex-direction: row;
-        // background-color: yellow;
       }
 
       .pressure-humidity-container, .pressure-humidity-search-container {
@@ -149,7 +141,6 @@ form {
         margin: 10px 0;
         display: flex;
         justify-content: space-between;
-        // background-color: green;
       }
 
       .temp-pressure-buttons, .temp-pressure-search-buttons {
@@ -157,13 +148,11 @@ form {
         margin: 10px 0;
         display: flex;
         justify-content: space-around;
-        // background-color: orange;
       }
     }
   }
 
   .trail-search-container {
     width: 100%;
-    // background-color: blue;
   }
 }
