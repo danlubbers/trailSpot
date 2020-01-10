@@ -16,7 +16,7 @@ let cityInput = '';
 let stateInput = '';
 
 
-//  *** Handling User Input *** //
+// Form Handler
 const form = document.querySelector("#form");
 form.addEventListener("submit", event => {
   event.preventDefault();
@@ -36,7 +36,7 @@ form.addEventListener("submit", event => {
 
   if (!isValid) return;
 
-
+// Sanitize Input to prevent XSS issues
   const cleanCity = sanitize(elements[0].value, {
     FORBID_ATTR: ['width', 'height', 'style'],
     FORBID_TAGS: ['style'],
@@ -80,7 +80,7 @@ const getUserInput = () => {
         const lat = userInput.data.results[0].geometry.lat;
         const long = userInput.data.results[0].geometry.lng;
       
-        // *** STARTS WEATHER SEARCH *** //
+        // Weather Info
         getWeatherInput(lat, long);
   
         const searchContainer = document.querySelector('#search-results-container');
@@ -97,7 +97,7 @@ const getUserInput = () => {
         const region = document.querySelector('#region-text-search');
         region.textContent = `${stateInput.toUpperCase()}`;
 
-        // *** Displays Trail Information from API to DOM *** //
+        // Displays Trail Information from API to DOM 
         getTrailInfoInput(lat, long);
   
         // This clears the input field back to the placeholder 
@@ -112,10 +112,6 @@ const getUserInput = () => {
   }
 
 
-
-
-
-// *** Uses at least 1 arrow function *** //
 const searchUserLocation = () => {
 
   // Resets the trail-container so multiple different searches are not appended
@@ -133,23 +129,18 @@ const searchUserLocation = () => {
   // Prevents multiple hits or reloads of the API with the same content
   if (count < 1) {
 
-    // *** Makes at least 1 async call *** //
     (async () => {
 
       try {
 
-        // *** Uses Axios & Async/Await *** //
         const userLocation = await axios.get(`https://ipapi.co/json/`);
         
         const lat = userLocation.data.latitude;
         const long = userLocation.data.longitude;
      
-
-        // *** STARTS WEATHER SEARCH *** //
+        // Weather Info
         getWeatherLocation(lat, long);
 
-
-        // *** Shows and hide dom elements *** //
         // This shows the hidden text until after the user clicks the location search button
         const locationContainer = document.querySelector('#location-results-container');
         locationContainer.style.display = "flex";
@@ -159,7 +150,7 @@ const searchUserLocation = () => {
         const region = document.querySelector('#region-text-location');
         region.textContent = `${userLocation.data.region}`;
 
-        // *** Displays Trail Information from API to DOM *** //
+        // Displays Trail Information from API to DOM 
         getTrailInfoLocation(lat, long);
 
       } catch (err) {

@@ -161,16 +161,6 @@ const getUserInput = () => {
           }
         });
   
-        // pressureButton.removeEventListener('submit', () => {
-        //   console.log(pressure.textContent);
-        //   if (pressure.textContent.match(/mb/)) {
-        //     pressure.textContent = 'Pressure: ' + pressureInches + 'in';
-        //   } else {
-        //     pressure.textContent = 'Pressure: ' + pressureMB + 'mb';
-        //   }
-        // });
-  
-  
         const searchContainer = document.querySelector('#search-results-container');
         searchContainer.style.display = "flex";
   
